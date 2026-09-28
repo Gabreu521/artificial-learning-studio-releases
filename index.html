@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Download Artificial Learning Studio</title>
+<meta name="description" content="Download Artificial Learning Studio for Mac, Windows or Linux.">
+<!--
+  The download page. It reads the latest release from the public releases repo
+  (RELEASES below), works out the visitor's system and chip, and offers the
+  matching installer. The release workflow copies this file into that repo,
+  where GitHub Pages serves it (free).
+-->
+<style>
+  :root {
+    --bg: #181818; --panel: #1f1f1f; --border: #2b2b2b; --fg: #cccccc; --dim: #9d9d9d;
+    --accent: #0078d4; --accent-hover: #026ec1; --btn2: #313131; --ok: #2ea043; --warn: #cca700;
+    color-scheme: dark;
+  }
+  @media (prefers-color-scheme: light) {
+    :root { --bg: #f8f8f8; --panel: #ffffff; --border: #e5e5e5; --fg: #3b3b3b; --dim: #616161;
+      --accent: #005fb8; --accent-hover: #0258a8; --btn2: #e5e5e5; --ok: #2da042; --warn: #bf8803; color-scheme: light; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; }
+  main { max-width: 760px; margin: 0 auto; padding: 56px 16px 64px; }
+  .logo { width: 72px; height: 72px; }
+  h1 { font-size: 30px; margin: 20px 0 6px; }
+  .lead { color: var(--dim); margin: 0 0 28px; }
+  .card { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 22px; }
+  .primary { display: inline-flex; align-items: center; gap: 10px; background: var(--accent); color: #fff;
+    text-decoration: none; padding: 12px 22px; border-radius: 6px; font-size: 16px; font-weight: 600; }
+  .primary:hover { background: var(--accent-hover); }
+  .primary[aria-disabled="true"] { opacity: .5; pointer-events: none; }
+  .meta { color: var(--dim); font-size: 13px; margin-top: 10px; }
+  .choice { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
+  .choice button { background: var(--btn2); color: var(--fg); border: 1px solid var(--border); border-radius: 6px; padding: 6px 12px; font: inherit; font-size: 13px; cursor: pointer; }
+  .choice button.on { border-color: var(--accent); }
+  h2 { font-size: 17px; margin: 34px 0 10px; }
+  ol { padding-left: 20px; margin: 0; }
+  li { margin: 4px 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  td { padding: 8px 6px; border-top: 1px solid var(--border); }
+  td:last-child { text-align: right; white-space: nowrap; }
+  a { color: #4daafc; }
+  @media (prefers-color-scheme: light) { a { color: #005fb8; } }
+  .note { border-left: 3px solid var(--warn); padding: 8px 12px; background: color-mix(in srgb, var(--warn) 8%, transparent); border-radius: 4px; font-size: 14px; }
+  code { background: var(--btn2); padding: 1px 5px; border-radius: 4px; font-size: 13px; }
+</style>
+</head>
+<body>
+<main>
+  <div class="logo" aria-hidden="true"><svg width="72" height="72" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2f7cf6"/>
+      <stop offset="1" stop-color="#7a3ff2"/>
+    </linearGradient>
+  </defs>
+  <rect x="64" y="64" width="896" height="896" rx="200" fill="url(#bg)"/>
+  <!-- open book -->
+  <path d="M512 404 C 430 344 318 322 214 334 L 214 724 C 318 712 430 734 512 794 Z" fill="#fff"/>
+  <path d="M512 404 C 594 344 706 322 810 334 L 810 724 C 706 712 594 734 512 794 Z" fill="#fff" fill-opacity=".82"/>
+  <path d="M512 404 L 512 794" stroke="#5b5cf0" stroke-width="14" stroke-linecap="round"/>
+  <!-- spark -->
+  <path d="M512 150 C 522 214 546 238 610 248 C 546 258 522 282 512 346 C 502 282 478 258 414 248 C 478 238 502 214 512 150 Z" fill="#fff"/>
+  <circle cx="660" cy="178" r="22" fill="#fff" fill-opacity=".85"/>
+</svg></div>
+  <h1>Artificial Learning Studio</h1>
+  <p class="lead">An all-round learning studio with an AI mentor that teaches instead of doing the work. Code in 16 languages (websites, Python, Java, C++ and more), with math, science, English and history on the way.</p>
+
+  <div class="card">
+    <a id="download" class="primary" href="#" aria-disabled="true">Finding the right download…</a>
+    <div id="meta" class="meta">Checking the latest version…</div>
+    <div id="choice" class="choice" hidden></div>
+  </div>
+
+  <h2 id="steps-title">How to install</h2>
+  <div id="steps"></div>
+
+  <h2>All downloads</h2>
+  <table id="all"><tr><td>Loading…</td></tr></table>
+
+  <h2>Updates</h2>
+  <p>The app checks for new versions when it opens. When one is ready it asks <em>Update now</em> or <em>Later</em>. On Windows and Linux it updates itself; on a Mac it opens this page so you can download the new version.</p>
+</main>
+
+<script>
+  const RELEASES = 'Gabreu521/artificial-learning-studio-releases';
+
+  const OS = {
+    mac: { name: 'Mac', steps: [
+      'Open the downloaded <code>.dmg</code> file and drag <strong>Artificial Learning Studio</strong> into <strong>Applications</strong>.',
+      'The first time, <strong>right-click</strong> the app in Applications and choose <strong>Open</strong>, then <strong>Open</strong> again. (Or: System Settings › Privacy &amp; Security › <strong>Open Anyway</strong>.) This happens once, because the app isn\'t signed by Apple yet.',
+      'If macOS says the app is <strong>damaged</strong>, open Terminal, run <code>xattr -cr "/Applications/Artificial Learning Studio.app"</code>, and open it again.',
+      'One file works on every Mac: Apple chip and Intel.',
+    ] },
+    windows: { name: 'Windows', steps: [
+      'Open the downloaded <code>Setup</code> file. It installs for you (no admin needed) and opens the app.',
+      'If Windows shows "Windows protected your PC", click <strong>More info</strong>, then <strong>Run anyway</strong>. This happens because the app isn\'t signed yet.',
+    ] },
+    linux: { name: 'Linux', steps: [
+      'Download the <code>.AppImage</code>, then make it runnable: right-click › Properties › Allow executing, or run <code>chmod +x Artificial-Learning-Studio-linux.AppImage</code>.',
+      'Double-click it to open. It updates itself when a new version comes out.',
+    ] },
+  };
+
+  // Which system and chip is this? Chrome and Edge say directly; Safari and
+  // Firefox don't, so on a Mac we ask the graphics chip (Apple M1… vs Intel).
+  async function detect() {
+    const ua = navigator.userAgent;
+    let os = /Windows/.test(ua) ? 'windows' : /Mac OS X|Macintosh/.test(ua) ? 'mac' : /Linux|X11/.test(ua) && !/Android/.test(ua) ? 'linux' : null;
+    let arch = 'x64';
+    try {
+      const d = await navigator.userAgentData?.getHighEntropyValues(['architecture', 'bitness']);
+      if (d?.architecture === 'arm') arch = 'arm64';
+      else if (d?.architecture === 'x86') arch = 'x64';
+      else if (os === 'mac') arch = macChip();
+    } catch { if (os === 'mac') arch = macChip(); }
+    if (!navigator.userAgentData && os === 'mac') arch = macChip();
+    return { os, arch };
+  }
+  function macChip() {
+    try {
+      const gl = document.createElement('canvas').getContext('webgl');
+      const info = gl && gl.getExtension('WEBGL_debug_renderer_info');
+      const r = info ? gl.getParameter(info.UNMASKED_RENDERER_WEBGL) : '';
+      if (/Apple (M\d|GPU)/i.test(r)) return 'arm64';
+      if (/Intel|AMD|Radeon/i.test(r)) return 'x64';
+    } catch {}
+    return 'arm64'; // every Mac sold since 2021 has an Apple chip
+  }
+
+  // One file per system (the Mac file works on Apple-chip and Intel Macs).
+  const FILE = { mac: /-mac\.dmg$/, windows: /Setup\.exe$/, linux: /\.AppImage$/ };
+  const pick = (assets, os) => (FILE[os] ? assets.find((a) => FILE[os].test(a.name)) : null);
+  const size = (b) => (b / 1024 / 1024).toFixed(0) + ' MB';
+
+  function show(assets, version, os) {
+    const a = pick(assets, os);
+    const btn = document.getElementById('download');
+    if (a) {
+      btn.href = a.browser_download_url;
+      btn.textContent = `Download for ${OS[os].name}`;
+      btn.removeAttribute('aria-disabled');
+      document.getElementById('meta').textContent = `Version ${version} · ${size(a.size)} · free`;
+    } else {
+      btn.textContent = 'Choose a download below';
+      document.getElementById('meta').textContent = `Version ${version}`;
+    }
+    document.getElementById('steps-title').textContent = `How to install on ${OS[os]?.name ?? 'your computer'}`;
+    document.getElementById('steps').innerHTML = OS[os] ? '<ol>' + OS[os].steps.map((s) => `<li>${s}</li>`).join('') + '</ol>' : '<p>Pick your system from the list below.</p>';
+    document.getElementById('choice').hidden = true;
+  }
+
+  function listAll(assets) {
+    const rows = [['Mac (Apple chip and Intel)', FILE.mac], ['Windows', FILE.windows], ['Linux', FILE.linux]]
+      .map(([name, re]) => [name, assets.find((a) => re.test(a.name))])
+      .filter(([, a]) => a);
+    document.getElementById('all').innerHTML = rows.length
+      ? rows.map(([n, a]) => `<tr><td>${n}</td><td><a href="${a.browser_download_url}">${a.name}</a> · ${size(a.size)}</td></tr>`).join('')
+      : '<tr><td>No downloads yet.</td></tr>';
+  }
+
+  (async () => {
+    const [{ os }, rel] = await Promise.all([
+      detect(),
+      fetch(`https://api.github.com/repos/${RELEASES}/releases/latest`).then((r) => (r.ok ? r.json() : null)).catch(() => null),
+    ]);
+    if (!rel) {
+      document.getElementById('download').textContent = 'No release yet';
+      document.getElementById('meta').textContent = 'The first version hasn\'t been published. Check back soon.';
+      document.getElementById('all').innerHTML = '<tr><td>No downloads yet.</td></tr>';
+      return;
+    }
+    const version = rel.tag_name.replace(/^v/, '');
+    show(rel.assets, version, os);
+    listAll(rel.assets);
+  })();
+</script>
+</body>
+</html>
